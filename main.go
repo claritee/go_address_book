@@ -16,16 +16,23 @@ type Person struct {
 func main() {
 	f, err := os.Open("people.csv")
 	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+		handleError(err)
 	}
 
 	lines, err := csv.NewReader(f).ReadAll()
 	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+		handleError(err)
 	}
+	parseInput(lines)
+	f.Close()
+}
 
+func handleError(err error) {
+	fmt.Println("Error:", err)
+	os.Exit(1)
+}
+
+func parseInput(lines [][]string) {
 	for _, line := range lines {
 		// fmt.Println(line)
 		a, _ := strconv.Atoi(line[1])
@@ -36,5 +43,4 @@ func main() {
 		}
 		fmt.Println(p)
 	}
-	f.Close()
 }
