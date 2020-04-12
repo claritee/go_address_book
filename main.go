@@ -1,8 +1,8 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
-	"io"
 	"os"
 )
 
@@ -12,5 +12,15 @@ func main() {
 		fmt.Println("Error:", err)
 		os.Exit(1)
 	}
-	io.Copy(os.Stdout, f)
+
+	lines, err := csv.NewReader(f).ReadAll()
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	for _, line := range lines {
+		fmt.Println(line)
+	}
+	f.Close()
 }
