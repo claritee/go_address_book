@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+const defaultFile = "people.csv"
+
 type Person struct {
 	name string
 	age  int
@@ -14,7 +16,15 @@ type Person struct {
 }
 
 func main() {
-	f, err := os.Open("people.csv")
+	args := os.Args
+	// fmt.Println(args)
+
+	inputFile := defaultFile
+	if len(args) > 1 {
+		inputFile = args[1]
+	}
+
+	f, err := os.Open(inputFile)
 	if err != nil {
 		handleError(err)
 	}
