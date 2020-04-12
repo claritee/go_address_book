@@ -24,6 +24,11 @@ func main() {
 		inputFile = args[1]
 	}
 
+	cmds := []string{}
+	if len(args) >= 3 {
+		cmds = args[2:]
+	}
+
 	f, err := os.Open(inputFile)
 	if err != nil {
 		handleError(err)
@@ -34,8 +39,10 @@ func main() {
 		handleError(err)
 	}
 	people := parseInput(lines)
-	fmt.Println(people)
-	f.Close()
+	defer f.Close()
+
+	// fmt.Println(people)
+	find(people, cmds)
 }
 
 func handleError(err error) {
@@ -46,7 +53,7 @@ func handleError(err error) {
 func parseInput(lines [][]string) []Person {
 	people := []Person{}
 	for _, line := range lines {
-		// fmt.Println(line)
+		fmt.Println(line)
 		a, _ := strconv.Atoi(line[1])
 		p := Person{
 			name: line[0],
@@ -56,4 +63,36 @@ func parseInput(lines [][]string) []Person {
 		people = append(people, p)
 	}
 	return people
+}
+
+func find(people []Person, cmds []string) {
+	cmd := cmds[0]
+	switch cmd {
+	case "oldest":
+		fmt.Println("Looking for the oldest")
+		person := oldest(people)
+		fmt.Println("The oldest person is ", person)
+	case "youngest":
+		fmt.Println("Looking for the youngest")
+	case "total":
+		fmt.Println("Looking for the total number of people")
+	case "city":
+		fmt.Println(fmt.Sprintf("Looking for city %s", cmds[1]))
+	case "name":
+		fmt.Println(fmt.Sprintf("Looking for name %s", cmds[1]))
+	default:
+		fmt.Println("Unable to find", cmd)
+	}
+}
+
+func oldest(people []Person) Person {
+	oldest := 0
+	oldestPerson := Person{}
+	for _, person := range people {
+		if person.age > oldest {
+			oldest = person.age
+			oldestPerson = person
+		}
+	}
+	return oldestPerson
 }
