@@ -20,7 +20,7 @@ func main() {
 	// fmt.Println(args)
 
 	inputFile := defaultFile
-	if len(args) > 1 {
+	if len(args) >= 2 {
 		inputFile = args[1]
 	}
 
@@ -33,7 +33,8 @@ func main() {
 	if err != nil {
 		handleError(err)
 	}
-	parseInput(lines)
+	people := parseInput(lines)
+	fmt.Println(people)
 	f.Close()
 }
 
@@ -42,7 +43,8 @@ func handleError(err error) {
 	os.Exit(1)
 }
 
-func parseInput(lines [][]string) {
+func parseInput(lines [][]string) []Person {
+	people := []Person{}
 	for _, line := range lines {
 		// fmt.Println(line)
 		a, _ := strconv.Atoi(line[1])
@@ -51,6 +53,7 @@ func parseInput(lines [][]string) {
 			age:  a,
 			city: line[2],
 		}
-		fmt.Println(p)
+		people = append(people, p)
 	}
+	return people
 }
