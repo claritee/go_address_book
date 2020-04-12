@@ -74,6 +74,8 @@ func find(people []Person, cmds []string) {
 		fmt.Println("The oldest person is ", person)
 	case "youngest":
 		fmt.Println("Looking for the youngest")
+		person := youngest(people)
+		fmt.Println("The youngest person is ", person)
 	case "total":
 		fmt.Println("Looking for the total number of people")
 	case "city":
@@ -95,4 +97,16 @@ func oldest(people []Person) Person {
 		}
 	}
 	return oldestPerson
+}
+
+func youngest(people []Person) Person {
+	youngest := 1000
+	youngestPerson := Person{}
+	for _, person := range people {
+		if person.age < youngest {
+			youngest = person.age
+			youngestPerson = person
+		}
+	}
+	return youngestPerson
 }
