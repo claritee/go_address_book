@@ -4,17 +4,12 @@ import (
 	"encoding/csv"
 	"fmt"
 	"go_address_book/models"
+	"go_address_book/utils"
 	"os"
 	"strconv"
 )
 
 const defaultFile = "people.csv"
-
-type PersonNotFoundError struct{}
-
-func (e *PersonNotFoundError) Error() string {
-	return "Person not found"
-}
 
 func main() {
 	fmt.Println(models.Blah)
@@ -72,25 +67,25 @@ func find(people []models.Person, cmds []string) {
 	switch cmd {
 	case "oldest":
 		fmt.Println("Looking for the oldest")
-		person := oldest(people)
+		person := utils.Oldest(people)
 		fmt.Println("The oldest person is ", person)
 	case "youngest":
 		fmt.Println("Looking for the youngest")
-		person := youngest(people)
+		person := utils.Youngest(people)
 		fmt.Println("The youngest person is ", person)
 	case "total":
 		fmt.Println("Looking for the total number of people")
-		fmt.Println("Total number of people ", total(people))
+		fmt.Println("Total number of people ", utils.Total(people))
 	case "city":
 		fmt.Println(fmt.Sprintf("Looking for city %s", cmds[1]))
-		person, err := city(people, cmds[1])
+		person, err := utils.City(people, cmds[1])
 		if err != nil {
 			handleError(err)
 		}
 		fmt.Println("Looking for the person with city ", person)
 	case "name":
 		fmt.Println(fmt.Sprintf("Looking for name %s", cmds[1]))
-		person, err := name(people, cmds[1])
+		person, err := utils.Name(people, cmds[1])
 		if err != nil {
 			handleError(err)
 		}
@@ -99,50 +94,4 @@ func find(people []models.Person, cmds []string) {
 	default:
 		fmt.Println("Unable to find", cmd)
 	}
-}
-
-func name(people []models.Person, name string) (models.Person, error) {
-	for _, person := range people {
-		if person.Name == name {
-			return person, nil
-		}
-	}
-	return models.Person{}, &PersonNotFoundError{}
-}
-
-func city(people []models.Person, city string) (models.Person, error) {
-	for _, person := range people {
-		if person.City == city {
-			return person, nil
-		}
-	}
-	return models.Person{}, &PersonNotFoundError{}
-}
-
-func total(people []models.Person) int {
-	return len(people)
-}
-
-func oldest(people []models.Person) models.Person {
-	oldest := 0
-	oldestPerson := models.Person{}
-	for _, person := range people {
-		if person.Age > oldest {
-			oldest = person.Age
-			oldestPerson = person
-		}
-	}
-	return oldestPerson
-}
-
-func youngest(people []models.Person) models.Person {
-	youngest := 1000
-	youngestPerson := models.Person{}
-	for _, person := range people {
-		if person.Age < youngest {
-			youngest = person.Age
-			youngestPerson = person
-		}
-	}
-	return youngestPerson
 }
