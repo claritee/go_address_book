@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -81,32 +82,40 @@ func find(people []Person, cmds []string) {
 		fmt.Println("Total number of people ", total(people))
 	case "city":
 		fmt.Println(fmt.Sprintf("Looking for city %s", cmds[1]))
-		fmt.Println("Looking for the person with city ", city(people, cmds[1]))
+		person, err := city(people, cmds[1])
+		if err != nil {
+			handleError(err)
+		}
+		fmt.Println("Looking for the person with city ", person)
 	case "name":
 		fmt.Println(fmt.Sprintf("Looking for name %s", cmds[1]))
-		fmt.Println("Looking for someone called ", name(people, cmds[1]))
+		person, err := name(people, cmds[1])
+		if err != nil {
+			handleError(err)
+		}
+		fmt.Println("Looking for someone called ", person)
 		// fallthrough - this is used to pass control flow to th next case
 	default:
 		fmt.Println("Unable to find", cmd)
 	}
 }
 
-func name(people []Person, name string) Person {
+func name(people []Person, name string) (Person, error) {
 	for _, person := range people {
 		if person.name == name {
-			return person
+			return person, nil
 		}
 	}
-	return Person{}
+	return Person{}, errors.New("Person not found") //TODO: why can't return nil
 }
 
-func city(people []Person, city string) Person {
+func city(people []Person, city string) (Person, error) {
 	for _, person := range people {
 		if person.city == city {
-			return person
+			return person, nil
 		}
 	}
-	return Person{} //TODO should this be an error?
+	return Person{}, errors.New("Person not found")
 }
 
 func total(people []Person) int {
