@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -14,6 +13,12 @@ type Person struct {
 	name string
 	age  int
 	city string
+}
+
+type PersonNotFoundError struct{}
+
+func (e *PersonNotFoundError) Error() string {
+	return "Person not found"
 }
 
 func main() {
@@ -106,7 +111,7 @@ func name(people []Person, name string) (Person, error) {
 			return person, nil
 		}
 	}
-	return Person{}, errors.New("Person not found") //TODO: why can't return nil
+	return Person{}, &PersonNotFoundError{}
 }
 
 func city(people []Person, city string) (Person, error) {
@@ -115,7 +120,7 @@ func city(people []Person, city string) (Person, error) {
 			return person, nil
 		}
 	}
-	return Person{}, errors.New("Person not found")
+	return Person{}, &PersonNotFoundError{}
 }
 
 func total(people []Person) int {

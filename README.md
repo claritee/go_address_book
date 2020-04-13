@@ -26,3 +26,4 @@ go run main.go people.csv name Lily
 * Switch Case - https://yourbasic.org/golang/switch-statement/
 * Errors - https://gobyexample.com/errors
 * Errors - https://blog.golang.org/error-handling-and-go
+* Errors - https://blog.golang.org/go1.13-errors
