@@ -3,23 +3,18 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"go_address_book/models"
-	"go_address_book/utils"
+	"go_address_book/src/models"
+	"go_address_book/src/utils"
 	"os"
 	"strconv"
 )
-
-const defaultFile = "people.csv"
 
 func main() {
 	fmt.Println(models.Blah)
 	args := os.Args
 	// fmt.Println(args)
 
-	inputFile := defaultFile
-	if len(args) >= 2 {
-		inputFile = args[1]
-	}
+	inputFile := args[1]
 
 	cmds := []string{}
 	if len(args) >= 3 {

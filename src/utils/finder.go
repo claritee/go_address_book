@@ -1,6 +1,6 @@
 package utils
 
-import "go_address_book/models"
+import "go_address_book/src/models"
 
 func Name(people []models.Person, name string) (models.Person, error) {
 	for _, person := range people {
