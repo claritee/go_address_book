@@ -81,12 +81,32 @@ func find(people []Person, cmds []string) {
 		fmt.Println("Total number of people ", total(people))
 	case "city":
 		fmt.Println(fmt.Sprintf("Looking for city %s", cmds[1]))
+		fmt.Println("Looking for the person with city ", city(people, cmds[1]))
 	case "name":
 		fmt.Println(fmt.Sprintf("Looking for name %s", cmds[1]))
+		fmt.Println("Looking for someone called ", name(people, cmds[1]))
 		// fallthrough - this is used to pass control flow to th next case
 	default:
 		fmt.Println("Unable to find", cmd)
 	}
+}
+
+func name(people []Person, name string) Person {
+	for _, person := range people {
+		if person.name == name {
+			return person
+		}
+	}
+	return Person{}
+}
+
+func city(people []Person, city string) Person {
+	for _, person := range people {
+		if person.city == city {
+			return person
+		}
+	}
+	return Person{} //TODO should this be an error?
 }
 
 func total(people []Person) int {
