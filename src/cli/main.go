@@ -6,7 +6,6 @@ import (
 	"go_address_book/src/models"
 	"go_address_book/src/utils"
 	"os"
-	"strconv"
 )
 
 func main() {
@@ -30,7 +29,7 @@ func main() {
 	if err != nil {
 		handleError(err)
 	}
-	people := parseInput(lines)
+	people := utils.ParseInput(lines)
 	defer f.Close()
 
 	// fmt.Println(people)
@@ -40,21 +39,6 @@ func main() {
 func handleError(err error) {
 	fmt.Println("Error:", err)
 	os.Exit(1)
-}
-
-func parseInput(lines [][]string) []models.Person {
-	people := []models.Person{}
-	for _, line := range lines {
-		fmt.Println(line)
-		a, _ := strconv.Atoi(line[1])
-		p := models.Person{
-			Name: line[0],
-			Age:  a,
-			City: line[2],
-		}
-		people = append(people, p)
-	}
-	return people
 }
 
 func find(people []models.Person, cmds []string) {
