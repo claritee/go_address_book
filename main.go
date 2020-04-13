@@ -78,13 +78,19 @@ func find(people []Person, cmds []string) {
 		fmt.Println("The youngest person is ", person)
 	case "total":
 		fmt.Println("Looking for the total number of people")
+		fmt.Println("Total number of people ", total(people))
 	case "city":
 		fmt.Println(fmt.Sprintf("Looking for city %s", cmds[1]))
 	case "name":
 		fmt.Println(fmt.Sprintf("Looking for name %s", cmds[1]))
+		// fallthrough - this is used to pass control flow to th next case
 	default:
 		fmt.Println("Unable to find", cmd)
 	}
+}
+
+func total(people []Person) int {
+	return len(people)
 }
 
 func oldest(people []Person) Person {

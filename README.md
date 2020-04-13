@@ -20,3 +20,7 @@ go run main.go people.csv youngest
 go run main.go people.csv city Melbourne
 go run main.go people.csv name Lily
 ```
+
+# Resources
+
+* Switch Case - https://yourbasic.org/golang/switch-statement/
