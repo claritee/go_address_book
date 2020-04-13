@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"github.com/claritee/go_address_book/person"
 )
 
 const defaultFile = "people.csv"
 
-type Person struct {
-	name string
-	age  int
-	city string
-}
+// type Person struct {
+// 	name string
+// 	age  int
+// 	city string
+// }
 
 type PersonNotFoundError struct{}
 
