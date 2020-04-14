@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -7,13 +7,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
-	// fmt.Println("Starting app")
-	// http.HandleFunc("/", handler)
-	// http.ListenAndServe(":8080", nil)
-
+func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", handler).Methods("GET")
+	return r
+}
+
+func main() {
+	// The router is now formed by calling the `newRouter` constructor function
+	// that we defined above. The rest of the code stays the same
+	r := newRouter()
 	http.ListenAndServe(":8080", r)
 }
 
