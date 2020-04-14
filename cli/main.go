@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"go_address_book/src/models"
-	"go_address_book/src/utils"
+	"go_address_book/models"
+	"go_address_book/utils"
 	"os"
 )
 
