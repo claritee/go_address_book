@@ -54,6 +54,25 @@ go mod tidy # clean up libs
 go mod vendor # external libs go here
 ```
 
+# Running tests
+
+```
+go test api/*
+```
+
+OR
+
+```
+cd api
+go test .
+```
+
+OR (all)
+
+```
+go test ./...
+```
+
 # Resources
 
 * Switch Case - https://yourbasic.org/golang/switch-statement/
@@ -64,4 +83,7 @@ go mod vendor # external libs go here
 * `dep` dependency management - https://github.com/golang/dep#setup
 * go projects - https://medium.com/mindorks/create-projects-independent-of-gopath-using-go-modules-802260cdfb51
 * webapp - https://www.sohamkamani.com/blog/2017/10/18/golang-adding-database-to-web-application/
+* webapp repo - https://github.com/sohamkamani/blog_example__go_web_db
 * go modules outside GOPATH - https://blog.francium.tech/go-modules-go-project-set-up-without-gopath-1ae601a4e868
+* project layout - https://github.com/golang-standards/project-layout
+* Tests - https://medium.com/@benbjohnson/structuring-tests-in-go-46ddee7a25c
