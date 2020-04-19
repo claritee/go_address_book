@@ -30,7 +30,7 @@ go run main.go people.csv name Lily
 # Running the webapp
 
 ```
-go run src/api/main.go
+go run api/main.go
 ```
 
 Then

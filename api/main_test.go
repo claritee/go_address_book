@@ -1,4 +1,4 @@
-package api
+package main
 
 import (
 	"io/ioutil"
@@ -11,14 +11,14 @@ func TestHandler(t *testing.T) {
 	r := newRouter()
 
 	mockServer := httptest.NewServer(r)
-	resp, err := http.Get(mockServer.URL + "/hello")
+	resp, err := http.Post(mockServer.URL + "/hello", "", nil)
 
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Status should be ok, got %d", resp.StatusCode)
+	if resp.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Status should be 405, got %d", resp.StatusCode)
 	}
 
 	defer resp.Body.Close()
@@ -28,7 +28,7 @@ func TestHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 	respString := string(b)
-	expected := "Hello World!"
+	expected := ""
 
 	if respString != expected {
 		t.Errorf("Response should be %s, got %s", expected, respString)
