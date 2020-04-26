@@ -1,3 +1,19 @@
+# Project setup
+
+Make sure GOPATH is set e.g. `~/Projects/golang`
+
+Repo needs to be in `$GOPATH/src` e.g. `~/Projects/golang/src/go_address_book`
+
+# Dependencies
+
+```
+dep ensure
+```
+
+```
+go mod vendor
+```
+
 # Running the CLI App
 
 Go to directory
@@ -49,6 +65,43 @@ curl http://localhost:8080/hello
 curl http://localhost:8080/bird
 ```
 
+To create a bird
+```
+http://localhost:8080/assets/
+```
+
+## CREATE
+
+```
+psql
+```
+
+```
+CREATE DATABASE bird_encyclopedia;
+\list;
+\c bird_encyclopedia;
+```
+
+Create test DB
+
+```
+CREATE DATABASE bird_encyclopedia_test;
+```
+
+### Create tables
+
+```
+CREATE TABLE birds (
+  id SERIAL PRIMARY KEY,
+  bird VARCHAR(256),
+  description VARCHAR(1024),
+  species VARCHAR(1024)
+);
+```
+## OR Docker PG image
+
+https://github.com/lib/pq/blob/master/TESTS.md#example-setup-docker
+
 # Dependencies
 
 Commands
@@ -69,7 +122,7 @@ OR
 
 ```
 cd api
-go test .
+go test . # or go test -v
 ```
 
 OR (all)
@@ -93,3 +146,6 @@ go test ./...
 * project layout - https://github.com/golang-standards/project-layout
 * Tests - https://medium.com/@benbjohnson/structuring-tests-in-go-46ddee7a25c
 * Example webapp https://github.com/sohamkamani/blog_example__go_web_app
+* Example webapp with DB https://github.com/sohamkamani/blog_example__go_web_db
+* Go webapp API https://semaphoreci.com/community/tutorials/building-and-testing-a-rest-api-in-go-with-gorilla-mux-and-postgresql
+*

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
+
 	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 func newRouter() *mux.Router {
@@ -23,7 +26,25 @@ func newRouter() *mux.Router {
 func main() {
 	// The router is now formed by calling the `newRouter` constructor function
 	// that we defined above. The rest of the code stays the same
+	fmt.Println("Starting server...")
+	connString := "dbname=bird_encyclopedia sslmode=disable"
+	db, err := sql.Open("postgres", connString)
+
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+
+	if err != nil {
+		panic(err)
+	}
+
+	InitStore(&dbStore{db: db})
+
+	// The router is now formed by calling the `newRouter` constructor function
+	// that we defined above. The rest of the code stays the same
 	r := newRouter()
+	fmt.Println("Serving on port 8080")
 	http.ListenAndServe(":8080", r)
 }
 
