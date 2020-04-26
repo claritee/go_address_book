@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-
 	"github.com/gorilla/mux"
 )
 
@@ -13,7 +12,11 @@ func newRouter() *mux.Router {
 
 	staticFileDirectory := http.Dir("./assets/")
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
+
 	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
+
+	r.HandleFunc("/bird", getBirdHandler).Methods("GET")
+	r.HandleFunc("/bird", createBirdHandler).Methods("POST")
 	return r
 }
 
