@@ -30,7 +30,8 @@ go run main.go people.csv name Lily
 # Running the webapp
 
 ```
-go run api/main.go
+go build
+go ./api
 ```
 
 Then
@@ -42,6 +43,10 @@ With a path
 
 ```
 curl http://localhost:8080/hello
+```
+
+```
+curl http://localhost:8080/bird
 ```
 
 # Dependencies
@@ -87,3 +92,4 @@ go test ./...
 * go modules outside GOPATH - https://blog.francium.tech/go-modules-go-project-set-up-without-gopath-1ae601a4e868
 * project layout - https://github.com/golang-standards/project-layout
 * Tests - https://medium.com/@benbjohnson/structuring-tests-in-go-46ddee7a25c
+* Example webapp https://github.com/sohamkamani/blog_example__go_web_app
