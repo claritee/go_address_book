@@ -73,6 +73,44 @@ OR (all)
 go test ./...
 ```
 
+# Create a DB schema
+
+Env Vars
+```
+export APP_DB_USERNAME=postgres
+export APP_DB_PASSWORD=
+export APP_DB_NAME=addressbook
+```
+
+Create DB
+
+```
+psql -U postgres
+```
+
+```
+create database addressbook;
+\c addressbook;
+```
+
+```
+CREATE TABLE person
+(
+    id SERIAL,
+    name TEXT NOT NULL,
+    city TEXT NOT NULL,
+    age SMALLINT NOT NULL,
+    CONSTRAINT adressbook_pkey PRIMARY KEY (id)
+);
+```
+
+Insert record
+
+```
+insert into person(name, city, age) values('George', 'Lake Como',60);
+```
+
+
 # Resources
 
 * Switch Case - https://yourbasic.org/golang/switch-statement/
