@@ -44,6 +44,20 @@ With a path
 curl http://localhost:8080/hello
 ```
 
+## Building
+
+In /api
+
+```
+go build
+```
+
+Then to run (in /api)
+
+```
+./api
+```
+
 # Dependencies
 
 Commands
@@ -125,3 +139,4 @@ insert into person(name, city, age) values('George', 'Lake Como',60);
 * go modules outside GOPATH - https://blog.francium.tech/go-modules-go-project-set-up-without-gopath-1ae601a4e868
 * project layout - https://github.com/golang-standards/project-layout
 * Tests - https://medium.com/@benbjohnson/structuring-tests-in-go-46ddee7a25c
+* Go & DB: https://flaviocopes.com/golang-sql-database/

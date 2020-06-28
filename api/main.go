@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
@@ -23,14 +24,12 @@ func newRouter() *mux.Router {
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
 
-	r.HandleFunc("/person/{id:[0-9]+}", getPerson).Methods("GET")
-
 	return r
 }
 
 func (a *App) Initialize(user, password, dbname string) {
 	connectionString :=
-		fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", user, password, dbname)
+		fmt.Sprintf("postgres://%s:%s@localhost:5432/%s?sslmode=disable", user, password, dbname)
 
 	var err error
 	a.DB, err = sql.Open("postgres", connectionString)
@@ -49,6 +48,7 @@ func main() {
 	// The router is now formed by calling the `newRouter` constructor function
 	// that we defined above. The rest of the code stays the same
 	r := newRouter()
+	r.HandleFunc("/person/{id:[0-9]+}", a.getPerson).Methods("GET")
 	http.ListenAndServe(":8080", r)
 }
 
@@ -56,6 +56,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World!")
 }
 
-func getPerson(w http.ResponseWriter, r *http.Request) {
+func (a *App) getPerson(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Get Person")
+
+	vars := mux.Vars(r)
+	id, _ := strconv.Atoi(vars["id"])
+	p := person{ID: id}
+
+	if err := p.getPerson(a.DB); err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			fmt.Fprintf(w, "Error No Records")
+		default:
+			fmt.Fprintf(w, "Error "+err.Error())
+		}
+		return
+	}
+
+	fmt.Fprintf(w, p.Name)
 }
